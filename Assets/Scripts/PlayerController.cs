@@ -37,6 +37,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.SetActive(false);
+        if(other.gameObject.CompareTag("Pickup"))
+        {
+            other.gameObject.SetActive(false);
+        }
     }
 }
