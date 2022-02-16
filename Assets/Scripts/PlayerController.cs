@@ -7,6 +7,7 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 
 {
+    public float timeCounter;
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
@@ -14,7 +15,8 @@ public class PlayerController : MonoBehaviour
     private int count;
     private float movementX;
     private float movementY;
-
+    public bool sphereonground = true;
+    
     // Start is called before the first frame update
 
     void Start()
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour
         movementY = movementVector.y;
     }
 
+    
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
@@ -41,16 +44,31 @@ public class PlayerController : MonoBehaviour
             winTextObject.SetActive(true);
         }
     }
-
-
+    private void Update()
+    {
+        if (Input.GetButtonDown("Jump") && sphereonground)
+        {
+            rb.AddForce(new Vector3(0, 6, 0), ForceMode.Impulse);
+            sphereonground = false;
+        }
+    }
     private void FixedUpdate()
     {
+
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         rb.AddForce(movement);
 
         rb.AddForce(movement * speed);
-    }
 
+       
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            sphereonground = true;
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Pickup"))
@@ -61,4 +79,5 @@ public class PlayerController : MonoBehaviour
             SetCountText();
         }
     }
+
 }
