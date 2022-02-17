@@ -79,7 +79,11 @@ public class PlayerController : MonoBehaviour
 
             SetCountText();
         }
-
+        if(other.gameObject.CompareTag("Pillar"))
+        {
+            other.gameObject.SetActive(false);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
         print("Entering the " + other.gameObject.tag);
     }
 
