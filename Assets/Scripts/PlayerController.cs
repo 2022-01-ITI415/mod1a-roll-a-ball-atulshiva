@@ -27,8 +27,8 @@ public class PlayerController : MonoBehaviour
 
         SetCountText();
         winTextObject.SetActive(false);
+        
     }
-
     private void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
@@ -39,10 +39,18 @@ public class PlayerController : MonoBehaviour
     
     void SetCountText()
     {
+        
         countText.text = "Count: " + count.ToString();
         if(count >= 8)
         {
-            winTextObject.SetActive(true);
+
+            StartCoroutine(Win());
+            IEnumerator Win() {
+                winTextObject.SetActive(true);
+                yield return new WaitForSeconds(5);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
         }
     }
     private void Update()
