@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 
@@ -78,6 +79,17 @@ public class PlayerController : MonoBehaviour
 
             SetCountText();
         }
+
+        print("Entering the " + other.gameObject.tag);
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        print("Entering the " + other.gameObject.tag);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        print("Exiting the " + other.gameObject.tag);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
